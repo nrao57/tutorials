@@ -1,0 +1,23 @@
+{
+
+  "Description" : "Barebones template to create an ec2 instance",
+   
+  "Mappings": { 
+	"RegionMap": {
+		"us-east-2": {"type":"t3.nano", "id":"ami-0b59bfac6be064b78"},
+		"us-west-1": {"type":"t2.micro","id":"ami-0782017a917e973e7"}
+	}
+  },
+  
+  "Resources" : {
+      "Ec2Instance" : {
+		  "Type" : "AWS::EC2::Instance", 
+		  "Properties" : {
+			"ImageId" : {"Fn::FindInMap":["RegionMap", {"Ref": "AWS::Region"},"id"]},
+			"KeyName" : "YoutubeKey",
+			"InstanceType" : {"Fn::FindInMap":["RegionMap", {"Ref": "AWS::Region"},"type"]}
+		  }
+		}
+  }
+
+}
